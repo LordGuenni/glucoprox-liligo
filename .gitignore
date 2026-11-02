@@ -1,0 +1,36 @@
+# PlatformIO / ESP32 Firmware
+.pio/
+firmware/.pio/
+firmware/.vscode/
+
+# Gradle & Android Build Outputs
+.gradle/
+GlucoProxBLE/.gradle/
+build/
+GlucoProxBLE/build/
+GlucoProxBLE/app/build/
+*.apk
+*.aab
+
+# Android Local Configuration (contains user-specific SDK paths)
+local.properties
+GlucoProxBLE/local.properties
+
+# IDE & Editor files
+.idea/
+GlucoProxBLE/.idea/
+*.iml
+GlucoProxBLE/*.iml
+GlucoProxBLE/app/*.iml
+.vscode/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyc
+
+# OS generated files
+.DS_Store
+Thumbs.db
+*.swp
+*~

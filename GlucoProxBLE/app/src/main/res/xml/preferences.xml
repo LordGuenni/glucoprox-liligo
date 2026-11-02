@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory
+        app:key="broadcast"
+        app:title="BLE Broadcast Settings">
+
+        <SwitchPreferenceCompat
+            app:defaultValue="true"
+            app:key="broadcast_en"
+            app:summaryOff="BLE advertising is disabled"
+            app:summaryOn="BLE advertising is active"
+            app:title="Enable BLE Broadcast" />
+
+        <EditTextPreference
+            app:defaultValue="3"
+            app:dialogTitle="Set Broadcast ID (1 - 65534)"
+            app:key="broadcast_id"
+            app:title="Broadcast Device ID"
+            app:useSimpleSummaryProvider="true" />
+
+        <ListPreference
+            app:defaultValue="0"
+            app:dialogTitle="Broadcast Duration"
+            app:entries="@array/broadcast_duration_entries"
+            app:entryValues="@array/broadcast_duration_values"
+            app:key="broadcast_duration"
+            app:title="Broadcast Duration"
+            app:useSimpleSummaryProvider="true" />
+
+        <ListPreference
+            app:defaultValue="1"
+            app:dialogTitle="Advertising Speed"
+            app:entries="@array/adv_mode_entries"
+            app:entryValues="@array/adv_mode_values"
+            app:key="adv_mode"
+            app:title="Advertising Frequency"
+            app:useSimpleSummaryProvider="true" />
+
+        <ListPreference
+            app:defaultValue="2"
+            app:dialogTitle="Transmission Power"
+            app:entries="@array/adv_tx_power_entries"
+            app:entryValues="@array/adv_tx_power_values"
+            app:key="adv_tx_power"
+            app:title="TX Power Level"
+            app:useSimpleSummaryProvider="true" />
+
+        <SwitchPreferenceCompat
+            app:defaultValue="true"
+            app:key="auto_refresh_age"
+            app:summaryOff="Packet remains static between readings"
+            app:summaryOn="Updates reading age minute counter every 60s"
+            app:title="Minute-by-Minute Age Refresh" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:key="security"
+        app:title="Security &amp; Encryption (AES-128)">
+
+        <SwitchPreferenceCompat
+            app:defaultValue="true"
+            app:key="aes_en"
+            app:summaryOff="Broadcast is sent unencrypted in plain text"
+            app:summaryOn="16-byte glucose payload is encrypted with AES-128"
+            app:title="Enable AES-128 Encryption" />
+
+        <EditTextPreference
+            app:defaultValue="GlucoProxSecret1"
+            app:dialogTitle="AES-128 Pre-Shared Key (16 chars)"
+            app:key="aes_key"
+            app:title="AES Encryption Key"
+            app:useSimpleSummaryProvider="true" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:key="night_mode_cat"
+        app:title="Display Night Mode (Auto Red &amp; Dim)">
+
+        <ListPreference
+            app:defaultValue="schedule"
+            app:dialogTitle="Night Mode Activation"
+            app:entries="@array/night_mode_type_entries"
+            app:entryValues="@array/night_mode_type_values"
+            app:key="night_mode_type"
+            app:title="Night Mode Activation"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            app:defaultValue="22:00"
+            app:dialogTitle="Night Start Time (HH:mm, e.g. 22:00)"
+            app:key="night_mode_start_time"
+            app:title="Night Start Time"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            app:defaultValue="07:00"
+            app:dialogTitle="Night End Time (HH:mm, e.g. 07:00)"
+            app:key="night_mode_end_time"
+            app:title="Night End Time"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            app:defaultValue="52.0"
+            app:dialogTitle="Latitude (for Sundown calculation)"
+            app:key="night_mode_lat"
+            app:title="Latitude (Sundown)"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            app:defaultValue="12.0"
+            app:dialogTitle="Longitude (for Sundown calculation)"
+            app:key="night_mode_lon"
+            app:title="Longitude (Sundown)"
+            app:useSimpleSummaryProvider="true" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:key="testing"
+        app:title="Testing &amp; Diagnostics">
+
+        <Preference
+            app:key="test_reading"
+            app:summary="Simulate a glucose reading without adb"
+            app:title="Send Test Reading" />
+
+        <Preference
+            app:key="clear_history"
+            app:summary="Remove all saved glucose measurements"
+            app:title="Clear Reading History" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:key="about"
+        app:title="System &amp; Permissions">
+
+        <Preference
+            app:key="permission_check"
+            app:summary="Check and request Bluetooth &amp; Notification permissions"
+            app:title="Permissions Status" />
+
+        <Preference
+            app:key="version"
+            app:summary="2.1 (Configurable BLE)"
+            app:title="App Version" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
+

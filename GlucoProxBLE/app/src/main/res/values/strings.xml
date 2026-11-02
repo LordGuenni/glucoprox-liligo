@@ -1,0 +1,63 @@
+<resources>
+    <string name="app_name">GlucoProx BLE</string>
+    <string name="broadcast_id">Set Broadcast Device ID (&lt; 65534)</string>
+    <string name="bt_permission_rationale">Bluetooth permission is required to send CGM values via BLE advertisements!</string>
+    <string name="bt_permission_failed">Permission was not granted!</string>
+
+    <!-- Broadcast Duration -->
+    <string-array name="broadcast_duration_entries">
+        <item>Continuous (Always broadcasting)</item>
+        <item>30 seconds after reading</item>
+        <item>1 minute after reading</item>
+        <item>2 minutes after reading</item>
+        <item>3 minutes after reading (Recommended)</item>
+        <item>5 minutes after reading</item>
+    </string-array>
+    <string-array name="broadcast_duration_values">
+        <item>0</item>
+        <item>30</item>
+        <item>60</item>
+        <item>120</item>
+        <item>180</item>
+        <item>300</item>
+    </string-array>
+
+    <!-- BLE Advertising Mode -->
+    <string-array name="adv_mode_entries">
+        <item>Balanced (~250ms interval, Recommended)</item>
+        <item>Low Power (~1000ms interval, Battery saver)</item>
+        <item>Low Latency (~100ms interval, High frequency)</item>
+    </string-array>
+    <string-array name="adv_mode_values">
+        <item>1</item>
+        <item>0</item>
+        <item>2</item>
+    </string-array>
+
+    <!-- BLE Tx Power -->
+    <string-array name="adv_tx_power_entries">
+        <item>Medium (Recommended)</item>
+        <item>High (Maximum Range)</item>
+        <item>Low (Power saving)</item>
+        <item>Ultra Low (Nearby only)</item>
+    </string-array>
+    <string-array name="adv_tx_power_values">
+        <item>2</item>
+        <item>3</item>
+        <item>1</item>
+        <item>0</item>
+    </string-array>
+
+    <!-- Display Night Mode Types -->
+    <string-array name="night_mode_type_entries">
+        <item>Disabled (Always Day)</item>
+        <item>Schedule (Time Window)</item>
+        <item>Sundown to Sunrise (Location &amp; Sunset)</item>
+    </string-array>
+    <string-array name="night_mode_type_values">
+        <item>disabled</item>
+        <item>schedule</item>
+        <item>sundown</item>
+    </string-array>
+</resources>
+

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#0284C7</color>
+    <color name="colorPrimaryDark">#0369A1</color>
+    <color name="colorAccent">#0EA5E9</color>
+
+    <color name="colorBackground">#F8FAFC</color>
+    <color name="colorSurface">#FFFFFF</color>
+    <color name="colorToolbar">#0284C7</color>
+    <color name="colorToolbarTitle">#FFFFFF</color>
+    <color name="colorTextPrimary">#0F172A</color>
+    <color name="colorTextSecondary">#64748B</color>
+    <color name="colorTextMuted">#94A3B8</color>
+    <color name="colorDivider">#E2E8F0</color>
+    <color name="colorPillBg">#F1F5F9</color>
+
+    <!-- Glucose Level Colors -->
+    <color name="glucoseLow">#EF4444</color>
+    <color name="glucoseNormal">#10B981</color>
+    <color name="glucoseHigh">#F59E0B</color>
+
+    <!-- Status Badges -->
+    <color name="badgeGreenBg">#DCFCE7</color>
+    <color name="badgeGreenText">#15803D</color>
+    <color name="badgeOrangeBg">#FEF3C7</color>
+    <color name="badgeOrangeText">#B45309</color>
+    <color name="badgeGreyBg">#F1F5F9</color>
+    <color name="badgeGreyText">#475569</color>
+
+    <!-- Warning Card -->
+    <color name="colorWarningCardBg">#FEF2F2</color>
+    <color name="colorWarningCardText">#B91C1C</color>
+</resources>
