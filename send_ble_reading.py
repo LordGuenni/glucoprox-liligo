@@ -148,6 +148,8 @@ def main():
     parser.add_argument("--key", type=str, default="GlucoProxSecret1",
                         help="16-character AES-128 secret key (default: GlucoProxSecret1)")
     parser.add_argument("--night", action="store_true", help="Enable Night Mode flag in BLE packet")
+    parser.add_argument("--duration", type=int, default=0,
+                        help="Broadcast duration in seconds before exiting (default: 0 = continuous)")
     parser.add_argument("--no-encrypt", action="store_true", help="Disable AES-128 encryption")
     parser.add_argument("--auto-advance", action="store_true",
                         help="Automatically advance age by 1 minute every 60 seconds")
@@ -244,6 +246,14 @@ def main():
             push_update()
             return True
         GLib.timeout_add_seconds(60, tick_age)
+
+    # Optional timeout to auto-exit after N seconds
+    if args.duration > 0:
+        def on_timeout():
+            print(f"\n[BLE] Duration limit of {args.duration}s reached. Exiting...")
+            loop.quit()
+            return False
+        GLib.timeout_add_seconds(args.duration, on_timeout)
 
     # Interactive input thread
     if args.interactive:
