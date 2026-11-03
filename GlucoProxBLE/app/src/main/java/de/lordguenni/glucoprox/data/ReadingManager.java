@@ -1,4 +1,4 @@
-package de.heoegbr.bgproxy.data;
+package de.lordguenni.glucoprox.data;
 
 import android.content.Context;
 import android.content.SharedPreferences;

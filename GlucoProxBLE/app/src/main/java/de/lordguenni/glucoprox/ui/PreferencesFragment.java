@@ -1,4 +1,4 @@
-package de.heoegbr.bgproxy.ui;
+package de.lordguenni.glucoprox.ui;
 
 import android.Manifest;
 import android.content.Context;
@@ -31,10 +31,10 @@ import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.SwitchPreferenceCompat;
 
-import de.heoegbr.bgproxy.R;
-import de.heoegbr.bgproxy.data.ReadingManager;
-import de.heoegbr.bgproxy.service.DontDieService;
-import de.heoegbr.bgproxy.util.NightModeHelper;
+import de.lordguenni.glucoprox.R;
+import de.lordguenni.glucoprox.data.ReadingManager;
+import de.lordguenni.glucoprox.service.DontDieService;
+import de.lordguenni.glucoprox.util.NightModeHelper;
 
 public class PreferencesFragment extends PreferenceFragmentCompat {
     private static final String TAG = "PreferencesFragment";

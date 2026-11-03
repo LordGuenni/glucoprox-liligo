@@ -1,4 +1,4 @@
-package de.heoegbr.bgproxy.util;
+package de.lordguenni.glucoprox.util;
 
 import java.util.Calendar;
 

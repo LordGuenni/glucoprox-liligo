@@ -1,4 +1,4 @@
-package de.heoegbr.bgproxy.service;
+package de.lordguenni.glucoprox.service;
 
 import android.Manifest;
 import android.app.Notification;
@@ -30,16 +30,16 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import de.heoegbr.bgproxy.GlucoProxApp;
-import de.heoegbr.bgproxy.R;
-import de.heoegbr.bgproxy.data.ReadingManager;
-import de.heoegbr.bgproxy.ui.MainActivity;
-import de.heoegbr.bgproxy.ui.PreferencesFragment;
+import de.lordguenni.glucoprox.GlucoProxApp;
+import de.lordguenni.glucoprox.R;
+import de.lordguenni.glucoprox.data.ReadingManager;
+import de.lordguenni.glucoprox.ui.MainActivity;
+import de.lordguenni.glucoprox.ui.PreferencesFragment;
 
 public class DontDieService extends Service {
-    public static final String ACTION_START = "de.heoegbr.bgproxy.action.START";
-    public static final String ACTION_STOP = "de.heoegbr.bgproxy.action.STOP";
-    public static final String ACTION_UPDATE_ADVERT = "de.heoegbr.bgproxy.action.UPDATE_ADVERT";
+    public static final String ACTION_START = "de.lordguenni.glucoprox.action.START";
+    public static final String ACTION_STOP = "de.lordguenni.glucoprox.action.STOP";
+    public static final String ACTION_UPDATE_ADVERT = "de.lordguenni.glucoprox.action.UPDATE_ADVERT";
 
     private static final String TAG = "DontDieService";
     private static final int NOTIFICATION_ID = 101;
@@ -164,7 +164,7 @@ public class DontDieService extends Service {
         int broadcastId = PreferencesFragment.getCleanBroadcastId(this);
         boolean aesEnabled = PreferencesFragment.isAesEnabled(this);
         byte[] aesKey = PreferencesFragment.getCleanAesKey(this);
-        boolean nightMode = de.heoegbr.bgproxy.util.NightModeHelper.isNightMode(this);
+        boolean nightMode = de.lordguenni.glucoprox.util.NightModeHelper.isNightMode(this);
         byte[] packet = ReadingManager.getInstance(this).buildBlePacket(broadcastId, aesEnabled, aesKey, nightMode);
         if (packet.length == 0) {
             Log.i(TAG, "No readings available yet to advertise");
@@ -254,7 +254,7 @@ public class DontDieService extends Service {
         String title;
         String contentText;
 
-        boolean isNight = de.heoegbr.bgproxy.util.NightModeHelper.isNightMode(this);
+        boolean isNight = de.lordguenni.glucoprox.util.NightModeHelper.isNightMode(this);
         String nightTag = isNight ? " [Night Mode]" : "";
 
         if (!enabled) {

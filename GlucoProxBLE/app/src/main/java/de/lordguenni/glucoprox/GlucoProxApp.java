@@ -1,4 +1,4 @@
-package de.heoegbr.bgproxy;
+package de.lordguenni.glucoprox;
 
 import android.app.Application;
 import android.app.NotificationChannel;
@@ -11,11 +11,11 @@ import android.util.Log;
 
 import androidx.core.content.ContextCompat;
 
-import de.heoegbr.bgproxy.service.DontDieService;
-import de.heoegbr.bgproxy.ui.PreferencesFragment;
+import de.lordguenni.glucoprox.service.DontDieService;
+import de.lordguenni.glucoprox.ui.PreferencesFragment;
 
 public class GlucoProxApp extends Application {
-    public static final String CHANNEL_ID = "de.heoegbr.bgproxy.notifications";
+    public static final String CHANNEL_ID = "de.lordguenni.glucoprox.notifications";
     private static final String TAG = "GlucoProxApp";
 
     @Override

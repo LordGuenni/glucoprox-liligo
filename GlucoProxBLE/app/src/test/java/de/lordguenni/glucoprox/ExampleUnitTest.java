@@ -1,4 +1,4 @@
-package de.heoegbr.bgproxy;
+package de.lordguenni.glucoprox;
 
 import org.junit.Test;
 

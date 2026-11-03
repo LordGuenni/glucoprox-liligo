@@ -1,11 +1,11 @@
 apply plugin: 'com.android.application'
 
 android {
-    namespace 'de.heoegbr.bgproxy'
+    namespace 'de.lordguenni.glucoprox'
     compileSdk 35
 
     defaultConfig {
-        applicationId "de.heoegbr.bgproxy"
+        applicationId "de.lordguenni.glucoprox"
         minSdk 26
         targetSdk 35
         versionCode 2

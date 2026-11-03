@@ -1,4 +1,4 @@
-package de.heoegbr.bgproxy.util;
+package de.lordguenni.glucoprox.util;
 
 import android.Manifest;
 import android.content.Context;

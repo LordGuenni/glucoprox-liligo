@@ -1,4 +1,4 @@
-package de.heoegbr.bgproxy;
+package de.lordguenni.glucoprox;
 
 import android.content.Context;
 
@@ -22,6 +22,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
-        assertEquals("de.heoegbr.bgproxy", appContext.getPackageName());
+        assertEquals("de.lordguenni.glucoprox", appContext.getPackageName());
     }
 }

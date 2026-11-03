@@ -1,4 +1,4 @@
-package de.heoegbr.bgproxy.receiver;
+package de.lordguenni.glucoprox.receiver;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -10,8 +10,8 @@ import android.util.Log;
 
 import androidx.core.content.ContextCompat;
 
-import de.heoegbr.bgproxy.data.ReadingManager;
-import de.heoegbr.bgproxy.service.DontDieService;
+import de.lordguenni.glucoprox.data.ReadingManager;
+import de.lordguenni.glucoprox.service.DontDieService;
 
 public class XdripDataReceiver extends BroadcastReceiver {
     public static final String XDRIP_ACTION_NEW_ESTIMATE = "com.eveningoutpost.dexdrip.BgEstimate";

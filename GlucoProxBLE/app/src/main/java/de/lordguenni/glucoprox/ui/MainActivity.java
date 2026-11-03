@@ -1,4 +1,4 @@
-package de.heoegbr.bgproxy.ui;
+package de.lordguenni.glucoprox.ui;
 
 import android.Manifest;
 import android.content.Intent;
@@ -24,9 +24,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import de.heoegbr.bgproxy.R;
-import de.heoegbr.bgproxy.data.ReadingManager;
-import de.heoegbr.bgproxy.service.DontDieService;
+import de.lordguenni.glucoprox.R;
+import de.lordguenni.glucoprox.data.ReadingManager;
+import de.lordguenni.glucoprox.service.DontDieService;
 
 public class MainActivity extends AppCompatActivity implements ReadingManager.OnNewReadingListener {
     private static final int PERMISSIONS_REQUEST_CODE = 200;
