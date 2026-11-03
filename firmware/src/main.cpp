@@ -51,21 +51,34 @@ bool manualOverride = false;           // True if user swapped mode manually via
 bool manualNightMode = false;          // User-selected manual mode
 bool currentNightMode = false;         // Effective night mode currently applied
 
-// Button Interrupt & Double-Press Detection
-volatile unsigned long lastButtonPressMs = 0;
-volatile bool doublePressDetected = false;
+// Display Orientation (survives soft resets)
+RTC_DATA_ATTR uint8_t displayRotation = 3; // 3 = USB on right, 1 = USB on left (180 deg flip)
 
-void IRAM_ATTR buttonISR() {
+// Button 1 (Top, GPIO 35) - Double-Press for Day/Night Mode Swap
+volatile unsigned long lastButton1PressMs = 0;
+volatile bool button1DoublePressDetected = false;
+
+void IRAM_ATTR button1ISR() {
   unsigned long now = millis();
-  // 50ms debounce
-  if (now - lastButtonPressMs > 50) {
-    // If second press occurs within 450ms, it's a double press
-    if (now - lastButtonPressMs < 450) {
-      doublePressDetected = true;
-      lastButtonPressMs = 0; // Reset to avoid chaining
+  if (now - lastButton1PressMs > 50) {
+    if (now - lastButton1PressMs < 450) {
+      button1DoublePressDetected = true;
+      lastButton1PressMs = 0;
     } else {
-      lastButtonPressMs = now;
+      lastButton1PressMs = now;
     }
+  }
+}
+
+// Button 2 (Bottom, GPIO 0) - Single-Press to Flip Display Rotation 180°
+volatile unsigned long lastButton2PressMs = 0;
+volatile bool button2Pressed = false;
+
+void IRAM_ATTR button2ISR() {
+  unsigned long now = millis();
+  if (now - lastButton2PressMs > 250) { // 250ms debounce
+    button2Pressed = true;
+    lastButton2PressMs = now;
   }
 }
 
@@ -279,15 +292,21 @@ void setup() {
   pinMode(ADC_EN, OUTPUT);
   digitalWrite(ADC_EN, HIGH);
 
-  // Configure Buttons with Pullups and Interrupt for Double-Press Detection
+  // Configure Buttons:
+  // Button 1 (Top, GPIO 35): Double-press to toggle Day/Night mode
   pinMode(BUTTON_1, INPUT_PULLUP);
-  pinMode(BUTTON_2, INPUT_PULLUP);
-  attachInterrupt(digitalPinToInterrupt(BUTTON_1), buttonISR, FALLING);
-  attachInterrupt(digitalPinToInterrupt(BUTTON_2), buttonISR, FALLING);
+  attachInterrupt(digitalPinToInterrupt(BUTTON_1), button1ISR, FALLING);
 
-  // Initialize TFT Display
+  // Button 2 (Bottom, GPIO 0): Single-press to flip display rotation 180°
+  pinMode(BUTTON_2, INPUT_PULLUP);
+  attachInterrupt(digitalPinToInterrupt(BUTTON_2), button2ISR, FALLING);
+
+  // Initialize TFT Display with saved orientation
+  if (displayRotation != 1 && displayRotation != 3) {
+    displayRotation = 3;
+  }
   tft.init();
-  tft.setRotation(3);
+  tft.setRotation(displayRotation);
 
   // Initialize PWM Backlight control on pin 4
   ledcSetup(PWM_CHANNEL, PWM_FREQ, PWM_RESOLUTION);
@@ -310,14 +329,14 @@ void setup() {
 }
 
 void loop() {
-  // Check if user double-pressed either button to toggle Day / Night mode
-  if (doublePressDetected) {
-    doublePressDetected = false;
+  // Check if Button 1 was double-pressed to toggle Day / Night mode
+  if (button1DoublePressDetected) {
+    button1DoublePressDetected = false;
     manualOverride = true;
     manualNightMode = !currentNightMode;
     currentNightMode = manualNightMode;
     applyNightModeBrightness(currentNightMode);
-    Serial.printf("Double-press detected! Swapped Night Mode to: %s (Backlight: %d)\n",
+    Serial.printf("Button 1 double-press! Swapped Night Mode to: %s (Backlight: %d)\n",
                   currentNightMode ? "ON (Red/Dim)" : "OFF (White/Bright)",
                   currentNightMode ? BRIGHTNESS_NIGHT : BRIGHTNESS_DAY);
     if (BZ > 0) {
@@ -325,7 +344,24 @@ void loop() {
     }
   }
 
-  // Perform a 2-second passive scan block (responsive to button double-press)
+  // Check if Button 2 was pressed to flip screen rotation 180°
+  if (button2Pressed) {
+    button2Pressed = false;
+    displayRotation = (displayRotation == 3) ? 1 : 3;
+    tft.setRotation(displayRotation);
+    Serial.printf("Button 2 pressed! Flipped display rotation to: %d\n", displayRotation);
+    if (BZ > 0) {
+      drawScreen();
+    } else {
+      tft.fillScreen(tft.color565(0, 0, 0));
+      tft.setTextSize(2);
+      tft.setTextColor(tft.color565(255, 255, 255));
+      tft.setCursor(30, 58);
+      tft.print("BLE Scanning...");
+    }
+  }
+
+  // Perform a 2-second passive scan block (responsive to button clicks)
   BLEScan* pBLEScan = BLEDevice::getScan();
   pBLEScan->start(2, false);
   pBLEScan->clearResults(); // Clear BLE scan buffer to prevent heap memory growth
