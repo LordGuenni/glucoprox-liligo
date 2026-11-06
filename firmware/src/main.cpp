@@ -84,7 +84,7 @@ void IRAM_ATTR button2ISR() {
 
 // Set display backlight duty cycle (0-255)
 void setBacklight(uint8_t duty) {
-  ledcWrite(PWM_CHANNEL, duty);
+  ledcWrite(TFT_BL_PIN, duty);
 }
 
 // Apply night mode: changes backlight brightness
@@ -123,13 +123,13 @@ class MyAdvertisedDeviceCallbacks : public BLEAdvertisedDeviceCallbacks {
       return;
     }
 
-    std::string serviceData = advertisedDevice.getServiceData();
+    String serviceData = advertisedDevice.getServiceData();
     // Packet structure: [DeviceID_Low, DeviceID_High, Flags_TimeOffset, BG_Newest, BG_Previous, ...]
     if (serviceData.length() < 4) {
       return; // Not enough data
     }
 
-    const uint8_t* advData = (const uint8_t*)serviceData.data();
+    const uint8_t* advData = (const uint8_t*)serviceData.c_str();
     uint16_t deviceId = advData[0] | (advData[1] << 8);
 
     // Verify configured Device ID filter
@@ -245,12 +245,12 @@ void drawScreen() {
   } 
 
   // Format Blood Glucose string
-  char bzStr[8];
+  char bzStr[16];
   snprintf(bzStr, sizeof(bzStr), "%d", BZ);
   int bzWidth = strlen(bzStr) * 48; // Size 8 = 48px per character
 
   // Format Delta string
-  char deltaStr[8];
+  char deltaStr[16];
   if (Delta >= 0) {
     snprintf(deltaStr, sizeof(deltaStr), "+%d", Delta);
   } else {
@@ -309,8 +309,7 @@ void setup() {
   tft.setRotation(displayRotation);
 
   // Initialize PWM Backlight control on pin 4
-  ledcSetup(PWM_CHANNEL, PWM_FREQ, PWM_RESOLUTION);
-  ledcAttachPin(TFT_BL_PIN, PWM_CHANNEL);
+  ledcAttach(TFT_BL_PIN, PWM_FREQ, PWM_RESOLUTION);
   applyNightModeBrightness(false); // Default to full brightness on boot
 
   tft.fillScreen(tft.color565(0, 0, 0));

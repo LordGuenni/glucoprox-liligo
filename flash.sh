@@ -8,6 +8,10 @@ FIRMWARE_DIR="$DIR/firmware"
 if ! command -v pio &>/dev/null; then
     if [ -f "$HOME/.local/bin/pio" ]; then
         export PATH="$HOME/.local/bin:$PATH"
+    elif [ -f "$HOME/.platformio/penv/bin/pio" ]; then
+        export PATH="$HOME/.platformio/penv/bin:$PATH"
+    elif [ -f "$FIRMWARE_DIR/.venv/bin/pio" ]; then
+        export PATH="$FIRMWARE_DIR/.venv/bin:$PATH"
     fi
 fi
 
@@ -17,25 +21,31 @@ if ! command -v pio &>/dev/null; then
     exit 1
 fi
 
-PORT="${1:-/dev/ttyACM0}"
+if [ "$1" = "build" ] || [ "$1" = "upload" ] || [ "$1" = "flash" ] || [ "$1" = "monitor" ] || [ "$1" = "all" ]; then
+    ACTION="$1"
+    PORT="/dev/ttyACM0"
+else
+    PORT="${1:-/dev/ttyACM0}"
+    ACTION="${2:-upload}"
+fi
 
-if [ ! -e "$PORT" ]; then
-    if [ -e "/dev/ttyUSB0" ]; then
-        PORT="/dev/ttyUSB0"
+if [ "$ACTION" != "build" ]; then
+    if [ ! -e "$PORT" ]; then
+        if [ -e "/dev/ttyUSB0" ]; then
+            PORT="/dev/ttyUSB0"
+        fi
+    fi
+
+    echo "=== Target Serial Port: $PORT ==="
+
+    if [ -e "$PORT" ] && [ ! -w "$PORT" ]; then
+        echo "Port $PORT is not writable by current user."
+        echo "Fixing permissions (sudo chmod 666 $PORT)..."
+        sudo chmod 666 "$PORT" || true
     fi
 fi
 
-echo "=== Target Serial Port: $PORT ==="
-
-if [ -e "$PORT" ] && [ ! -w "$PORT" ]; then
-    echo "Port $PORT is not writable by current user."
-    echo "Fixing permissions (sudo chmod 666 $PORT)..."
-    sudo chmod 666 "$PORT" || true
-fi
-
 cd "$FIRMWARE_DIR"
-
-ACTION="${2:-upload}"
 
 case "$ACTION" in
     build)
